@@ -1,4 +1,5 @@
 import { useResponsive } from '@/shared/hooks/useResponsive';
+import { GetItem, SetItem } from '@/shared/hooks/useStorage';
 import { colors, fonts } from '@/shared/theme';
 import Clock from '@assets/slides/clock.png';
 import Graph from "@assets/slides/graph.png";
@@ -10,7 +11,6 @@ import React, { useEffect } from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
 import AppIntroSlider from 'react-native-app-intro-slider';
 import { SlideProps } from '../shared/interfaces';
-import { GetItem, SetItem } from '../shared/storage';
 
 export default function App() {
   const router = useRouter()
@@ -46,7 +46,7 @@ const renderItem = ({ item }: SlideProps) => {
   return (
     <View style={S.container} key={item.id}>
       <Text style={S.title}>{item.title}</Text>
-      <Image source={item.image}  style={S.image}/>
+      <Image source={{ uri: item.image }} style={imageStyle.image} />
       <Text style={S.description}>{item.description}</Text>
     </View>
   );
@@ -55,13 +55,13 @@ const renderItem = ({ item }: SlideProps) => {
 
 const onDone = () => {
   SetItem("isOnboarded", "true");
-  router.push("/Auth");
+  router.push("/Auth/Login");
 }
 useEffect(() => {
   async function fetchData() {
     const value = await GetItem("isOnboarded");
     if (value) {
-      router.replace('/Auth');
+      router.replace("/Auth/Login");
     }
   }
   fetchData();
@@ -90,7 +90,7 @@ const S = StyleSheet.create({
     backgroundColor: colors.background,
   },
   title: {
-    fontSize: useResponsive(20),
+    fontSize: useResponsive(20) ?? 20,
     fontFamily: fonts.heading,
     color: colors.text,
     textAlign: 'center',
@@ -102,10 +102,14 @@ const S = StyleSheet.create({
     textAlign: 'center',
     paddingHorizontal: 10,
   },
-  image:{
+  
+ 
+});
+
+const imageStyle = StyleSheet.create({
+  image: {
     height: 400,
     width: 400,
     marginVertical: 70,
-  }
- 
+  },
 });

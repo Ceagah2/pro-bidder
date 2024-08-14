@@ -4,7 +4,13 @@
     "strict": true,
     "paths": {
       "@/*": [
-        "./src/app/*"
+        "./src/*"
+      ],
+      "@components/*": [
+        "./src/components/*"
+      ],
+      "@assets/*": [
+        "./assets/*"
       ]
     }
   },

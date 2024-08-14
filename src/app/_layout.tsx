@@ -1,6 +1,7 @@
 import ToastProviderWrapper from "@/components/Toasty";
 import { useAuth } from "@/shared/hooks/useAuth";
 import { GetItem } from "@/shared/storage";
+import { ClerkLoaded, ClerkProvider } from "@clerk/clerk-expo";
 import {
   Montserrat_300Light,
   Montserrat_400Regular,
@@ -20,6 +21,7 @@ import { ActivityIndicator } from "react-native";
 export default function Layout() {
   const { isLoading: authLoading, isAuthenticated } = useAuth();
   const [isOnboarded, setIsOnboarded] = useState<boolean | null>(null);
+  const publishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY!;
   const [fontsLoaded] = useFonts({
     Montserrat_300Light,
     Montserrat_400Regular,
@@ -46,10 +48,29 @@ export default function Layout() {
   if (!fontsLoaded || authLoading || isOnboarded === null) {
     return <ActivityIndicator size="large" color="#000" />;
   }
+  if (!publishableKey) {
+    throw new Error(
+      "Missing Publishable Key. Please set EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY in your .env"
+    );
+  }
 
   return (
+  <ClerkProvider publishableKey={publishableKey}>
     <ToastProviderWrapper>
-      {!isOnboarded ? <Slot /> : isAuthenticated ? <Slot /> : <Slot />}
+      {!isOnboarded ? (
+        <ClerkLoaded>
+          <Slot />
+        </ClerkLoaded>
+      ) : isAuthenticated ? (
+        <ClerkLoaded>
+          <Slot />
+        </ClerkLoaded>
+      ) : (
+        <ClerkLoaded>
+          <Slot />
+        </ClerkLoaded>
+      )}
     </ToastProviderWrapper>
+    </ClerkProvider>
   );
 }

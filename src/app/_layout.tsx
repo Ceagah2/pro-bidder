@@ -37,7 +37,7 @@ function InitialLayout() {
     if(isSignedIn && isOnboarded) router.replace('/Auth/Home');
     if(!isSignedIn && isOnboarded) router.replace('/Auth/Login');
     if(!isSignedIn && !isOnboarded) router.replace('/');
-  }, [isSignedIn]);
+  }, [isSignedIn, isOnboarded, isLoaded]);
   return isLoaded ? <Slot /> : <ActivityIndicator  style={{flex: 1, justifyContent: "center", alignItems: "center"}}/>
 }
 export default function Layout() {

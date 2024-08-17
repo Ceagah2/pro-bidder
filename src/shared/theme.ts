@@ -1,3 +1,4 @@
+
 export const colors = {
   // Cores primarias 
   primary: "#8CA6DB",
@@ -11,6 +12,10 @@ export const colors = {
   warning: "#F0AD4E",
   white: "#FFF",
   black: "#000",
+  // Cores auxiliares
+  gray: "#999",
+  lightGray: "#E5E5E5",
+  darkGray: "#777",
 };
 
 export const fonts = {

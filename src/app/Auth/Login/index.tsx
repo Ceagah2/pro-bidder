@@ -11,6 +11,8 @@ import { S } from './styles';
 WebBrowser.maybeCompleteAuthSession();
 export default function Auth() {
   const [isLoading, setIsLoading] = useState<boolean>(false)
+
+
   const googleOAuth = useOAuth({
     strategy: "oauth_google",
   })
@@ -31,7 +33,7 @@ export default function Auth() {
       
     } catch (error) {
       setIsLoading(false)
-      console.log(error)
+      console.log("Error during Google Sign-In:", JSON.stringify(error, null, 2));
     }
   }
 

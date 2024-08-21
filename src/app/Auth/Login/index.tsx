@@ -1,61 +1,116 @@
-import { Button } from '@/components/Button';
-import { useOAuth } from '@clerk/clerk-expo';
+import { Button } from "@/components/Button";
+import { Container } from "@/components/Container";
+import { useOAuth } from "@clerk/clerk-expo";
 import * as Linking from "expo-linking";
 import * as WebBrowser from "expo-web-browser";
-import { useEffect, useState } from 'react';
-import { View } from 'react-native';
-import { S } from './styles';
-
-
+import { useEffect, useState } from "react";
+import { Text, View } from "react-native";
+import { S } from "./styles";
 
 WebBrowser.maybeCompleteAuthSession();
+
 export default function Auth() {
-  const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [loadingButton, setLoadingButton] = useState<string | null>(null); 
+  const googleOAuth = useOAuth({ strategy: "oauth_google" });
+  const appleOAuth = useOAuth({ strategy: "oauth_apple" });
+  const githubOAuth = useOAuth({ strategy: "oauth_github" });
 
-
-  const googleOAuth = useOAuth({
-    strategy: "oauth_google",
-  })
-
-  const onGoogleSignIn = async () => {
-    try {
-      setIsLoading(true)
-      const redirectUrl = Linking.createURL("/");
-      const oAuthFlow = await googleOAuth.startOAuthFlow({redirectUrl})
-
-      if(oAuthFlow.authSessionResult?.type === "success") {
-        if(oAuthFlow.setActive){
-          await oAuthFlow.setActive({session: oAuthFlow.createdSessionId})
-        }
-      } else {
-        setIsLoading(false)
-      }
-      
-    } catch (error) {
-      setIsLoading(false)
-      console.log("Error during Google Sign-In:", JSON.stringify(error, null, 2));
+  const onSignIn = async (strategy: "google" | "apple" | "github") => {
+    let oauthProvider;
+    switch (strategy) {
+      case "google":
+        oauthProvider = googleOAuth;
+        break;
+      case "apple":
+        oauthProvider = appleOAuth;
+        break;
+      case "github":
+        oauthProvider = githubOAuth;
+        break;
+      default:
+        throw new Error("Unsupported OAuth strategy");
     }
-  }
+
+    try {
+      setLoadingButton(strategy); 
+      const redirectUrl = Linking.createURL("/");
+      const oAuthFlow = await oauthProvider.startOAuthFlow({ redirectUrl });
+
+      if (oAuthFlow.authSessionResult?.type === "success") {
+        if (oAuthFlow.setActive) {
+          await oAuthFlow.setActive({ session: oAuthFlow.createdSessionId });
+        }
+      }
+    } catch (error) {
+      console.log(
+        `Error during ${
+          strategy.charAt(0).toUpperCase() + strategy.slice(1)
+        } Sign-In:`,
+        JSON.stringify(error, null, 2)
+      );
+    } finally {
+      setLoadingButton(null); 
+    }
+  };
 
   useEffect(() => {
-    WebBrowser.warmUpAsync()
+    WebBrowser.warmUpAsync();
 
     return () => {
-      WebBrowser.coolDownAsync()
-    }
-  },[])
+      WebBrowser.coolDownAsync();
+    };
+  }, []);
+
   return (
-    <View style={S.container}>
-      <View style={S.buttonContainer}>
-        <Button
-          text="Login com Google"
-          backgroundColor="black"
-          textColor="white"
-          icon="logo-google"
-          onPress={onGoogleSignIn}
-          isLoading={isLoading}
-        />
+    <Container headerTitle="" shouldBack={false}>
+      <View style={S.content}>
+        <View style={S.header}>
+          <Text style={S.appName}>Pro-Bidder</Text>
+          <Text style={S.headerText}>
+            Simplificando orçamentos, conquistando mais clientes
+          </Text>
+        </View>
+        <View style={S.loginForm}>
+          <View style={S.buttonContainer}>
+            <Button
+              text="Entrar com Google"
+              backgroundColor="white"
+              textColor="black"
+              icon="logo-google"
+              iconColor="red"
+              onPress={() => onSignIn("google")}
+              isLoading={loadingButton === "google"}
+            />
+          </View>
+          <View style={S.buttonContainer}>
+            <Button
+              text="Entrar com Apple"
+              backgroundColor="black"
+              textColor="white"
+              icon="logo-apple"
+              iconColor="white"
+              onPress={() => onSignIn("apple")}
+              isLoading={loadingButton === "apple"}
+            />
+          </View>
+          <View style={S.buttonContainer}>
+            <Text style={S.labelText}>Apenas para freelancers.</Text>
+            <Button
+              text="Entrar com Github"
+              backgroundColor="black"
+              textColor="white"
+              icon="logo-github"
+              iconColor="white"
+              onPress={() => onSignIn("github")}
+              isLoading={loadingButton === "github"}
+            />
+          </View>
+          <Text style={S.formText}>
+            Escolha uma das opções acima para fazer login e aproveitar as
+            funcionalidades.
+          </Text>
+        </View>
       </View>
-    </View>
+    </Container>
   );
 }

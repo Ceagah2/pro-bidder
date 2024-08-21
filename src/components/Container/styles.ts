@@ -19,9 +19,7 @@ export const S = StyleSheet.create({
     marginBottom: 16,
   },
   headerLine:{
-    width: "75%",
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
 
   },
@@ -31,4 +29,12 @@ export const S = StyleSheet.create({
     color: colors.white,
     textAlign: "center",
   },
+  content:{
+    width: "100%",
+    height: "100%",
+    justifyContent: "flex-start",
+    alignItems: "center",
+    backgroundColor: colors.background,
+    padding: 16,
+  }
 });

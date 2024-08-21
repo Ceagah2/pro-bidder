@@ -10,7 +10,7 @@ import { useRouter } from "expo-router";
 import React, { useEffect } from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
 import AppIntroSlider from 'react-native-app-intro-slider';
-import { SlideProps } from '../shared/interfaces';
+import { SlideProps } from '../shared/types/Slides';
 
 export default function App() {
   const router = useRouter()
@@ -46,7 +46,7 @@ const renderItem = ({ item }: SlideProps) => {
   return (
     <View style={S.container} key={item.id}>
       <Text style={S.title}>{item.title}</Text>
-      <Image source={{ uri: item.image }} style={imageStyle.image} />
+      <Image source={item.image} style={S.image} />
       <Text style={S.description}>{item.description}</Text>
     </View>
   );
@@ -93,23 +93,19 @@ const S = StyleSheet.create({
     fontSize: useResponsive(20) ?? 20,
     fontFamily: fonts.heading,
     color: colors.text,
-    textAlign: 'center',
+    textAlign: "center",
   },
   description: {
     fontSize: useResponsive(14),
     fontFamily: fonts.body,
     color: colors.text,
-    textAlign: 'center',
+    textAlign: "center",
     paddingHorizontal: 10,
   },
-  
- 
-});
-
-const imageStyle = StyleSheet.create({
   image: {
     height: 400,
     width: 400,
     marginVertical: 70,
   },
 });
+

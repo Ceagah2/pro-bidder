@@ -11,7 +11,7 @@ export const S = StyleSheet.create({
     backgroundColor: colors.background,
   },
   userCard: {
-    width: "90%",
+    width: "100%",
     height: 100,
     borderRadius: 10,
     justifyContent: "space-between",

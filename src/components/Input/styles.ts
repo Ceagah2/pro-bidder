@@ -3,10 +3,11 @@ import { StyleSheet } from "react-native";
 
 export const S = StyleSheet.create({
   container: {
-    width: '90%',
-    height: 50,
+    width: "100%",
+    height: 70,
     justifyContent: "center",
     alignItems: "flex-start",
+    marginBottom: 16,
   },
   label: {
     fontFamily: "Roboto_500Medium",
@@ -14,11 +15,11 @@ export const S = StyleSheet.create({
     color: colors.text,
   },
   input: {
-    width: '100%',
-    height: 40,
+    width: "100%",
     borderWidth: 1,
     borderColor: colors.gray,
     borderRadius: 5,
     padding: 10,
+    backgroundColor: colors.lightGray,
   },
-})
+});

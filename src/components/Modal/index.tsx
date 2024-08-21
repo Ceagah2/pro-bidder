@@ -1,3 +1,4 @@
+import { colors } from "@/shared/theme";
 import React from "react";
 import { Modal, StyleSheet, TouchableOpacity, View } from "react-native";
 
@@ -42,7 +43,7 @@ const styles = StyleSheet.create({
   },
   modalContent: {
     width: "100%",
-    backgroundColor: "white",
+    backgroundColor: colors.background,
     borderRadius: 10,
     padding: 20,
     shadowColor: "#000",

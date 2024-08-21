@@ -5,6 +5,7 @@ export interface JobsProps {
   sponsor: string;
   eta: number;
   tasks: TaskProps[];
+  dueDate: Date;
 }
 
 export interface TaskProps {

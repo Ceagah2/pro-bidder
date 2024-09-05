@@ -1,17 +1,17 @@
 
 export const colors = {
-  // Cores primarias 
-  primary: "#8CA6DB",
-  secondary: "#CAD2D9",
-  text: "#4A4A56",
+  // Cores primarias
+  primary: "#415fd0",
+  secondary: "#4bb1ee",
+  text: "#1e1d45",
   background: "#D1D1D4",
-  highlight: "#7395AE",
+  highlight: "#c828a8",
   // Cores para acoes
   success: "#5CB85C",
   danger: "#D9534F",
   warning: "#F0AD4E",
   white: "#FFF",
-  black: "#000",
+  black: "#070709",
   // Cores auxiliares
   gray: "#999",
   lightGray: "#E5E5E5",

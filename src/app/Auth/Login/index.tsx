@@ -1,10 +1,11 @@
 import { Button } from "@/components/Button";
 import { Container } from "@/components/Container";
+import AppIcon from '@assets/images/icon.jpeg';
 import { useOAuth } from "@clerk/clerk-expo";
 import * as Linking from "expo-linking";
 import * as WebBrowser from "expo-web-browser";
 import { useEffect, useState } from "react";
-import { Text, View } from "react-native";
+import { Image, Text, View } from "react-native";
 import { S } from "./styles";
 
 WebBrowser.maybeCompleteAuthSession();
@@ -70,14 +71,15 @@ export default function Auth() {
             Simplificando orçamentos, conquistando mais clientes
           </Text>
         </View>
+        <Image source={AppIcon} style={S.logoImage} />
         <View style={S.loginForm}>
           <View style={S.buttonContainer}>
             <Button
               text="Entrar com Google"
-              backgroundColor="white"
-              textColor="black"
+              backgroundColor="black"
+              textColor="white"
               icon="logo-google"
-              iconColor="red"
+              iconColor="white"
               onPress={() => onSignIn("google")}
               isLoading={loadingButton === "google"}
             />
@@ -94,7 +96,6 @@ export default function Auth() {
             />
           </View>
           <View style={S.buttonContainer}>
-            <Text style={S.labelText}>Apenas para freelancers.</Text>
             <Button
               text="Entrar com Github"
               backgroundColor="black"
@@ -108,6 +109,11 @@ export default function Auth() {
           <Text style={S.formText}>
             Escolha uma das opções acima para fazer login e aproveitar as
             funcionalidades.
+          </Text>
+        </View>
+        <View style={S.footer}>
+          <Text style={S.footerText}>
+            Termos de Uso | Política de Privacidade
           </Text>
         </View>
       </View>

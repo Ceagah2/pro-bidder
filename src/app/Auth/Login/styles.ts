@@ -11,7 +11,7 @@ export const S = StyleSheet.create({
   },
   header: {
     width: "60%",
-    height: 130,
+    height: 100,
     justifyContent: "center",
     alignItems: "center",
     marginBottom: 16,
@@ -26,17 +26,25 @@ export const S = StyleSheet.create({
     fontSize: useResponsive(12),
     fontFamily: "Roboto_400Regular",
   },
+  logoImage: {
+    width: 150,
+    height: 150,
+    borderRadius: 20,
+    marginBottom: 16,
+  },
   loginForm: {
     width: "80%",
     justifyContent: "center",
     alignItems: "center",
-    gap: 24,
+    gap: 16,
+    marginTop: 16,
   },
   formText: {
     fontSize: useResponsive(10),
     fontFamily: "Roboto_400Regular",
     color: colors.text,
-    marginTop: 16,
+    marginTop: 8,
+    fontStyle: "italic",
   },
   labelText: {
     fontSize: useResponsive(8),
@@ -49,5 +57,12 @@ export const S = StyleSheet.create({
     borderRadius: 10,
     justifyContent: "center",
     alignItems: "center",
+  },
+  footer: {
+    marginTop: 30,
+  },
+  footerText: {
+    fontSize: 12,
+    color: colors.highlight,
   },
 });

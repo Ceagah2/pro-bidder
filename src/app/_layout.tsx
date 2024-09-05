@@ -15,6 +15,7 @@ import {
 } from "@expo-google-fonts/roboto";
 import { useFonts } from "expo-font";
 import { router, Slot } from "expo-router";
+import { StatusBar } from "expo-status-bar";
 import React, { useEffect, useState } from "react";
 import { ActivityIndicator, View } from "react-native";
 
@@ -70,6 +71,7 @@ export default function Layout() {
   return (
     <ClerkProvider publishableKey={publishableKey} tokenCache={tokenCache} >
       <ToastProviderWrapper>
+        <StatusBar style="auto" />
         <InitialLayout />
       </ToastProviderWrapper>
     </ClerkProvider>

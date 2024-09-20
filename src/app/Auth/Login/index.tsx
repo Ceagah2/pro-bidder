@@ -1,11 +1,11 @@
 import { Button } from "@/components/Button";
 import { Container } from "@/components/Container";
-import AppIcon from '@assets/images/icon.jpeg';
+import AppIcon from '@assets/images/icon.png';
 import { useOAuth } from "@clerk/clerk-expo";
 import * as Linking from "expo-linking";
 import * as WebBrowser from "expo-web-browser";
 import { useEffect, useState } from "react";
-import { Image, Text, View } from "react-native";
+import { Image, Text, TouchableOpacity, View } from "react-native";
 import { S } from "./styles";
 
 WebBrowser.maybeCompleteAuthSession();
@@ -53,6 +53,10 @@ export default function Auth() {
       setLoadingButton(null); 
     }
   };
+
+  const redirectToSite = () => {
+    Linking.openURL("https://fantasyforge.vercel.app/");
+  }
 
   useEffect(() => {
     WebBrowser.warmUpAsync();
@@ -111,11 +115,11 @@ export default function Auth() {
             funcionalidades.
           </Text>
         </View>
-        <View style={S.footer}>
+        <TouchableOpacity style={S.footer} onPress={redirectToSite}>
           <Text style={S.footerText}>
             Termos de Uso | Política de Privacidade
           </Text>
-        </View>
+        </TouchableOpacity>
       </View>
     </Container>
   );
